@@ -1,0 +1,38 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Виртуальные окружения
+venv/
+env/
+*.env
+# Игнорирование внешних библиотек и зависимостей
+.venv/
+*.egg-info/
+# Логи и временные файлы
+*.log
+*.tmp
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.swp
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Папки и файлы, связанные с установленными зависимостями
+*.other/
+*.strategies/
+*./external libraries
+dist/
+build/
+*.tar.gz
+*.whl
+
+# Игнорируем конфиденциальные файлы
+*.env
+config/secrets.json

@@ -16,12 +16,12 @@ class MultiIndicatorStrategy(strategy.Strategy):
         super().__init__()
         # Инициализация индикаторов
         self.ema_short = ExponentialMovingAverage(period=ema_short_period)
-        self.ema_middle = ExponentialMovingAverage(period=9)
+        self.ema_middle = ExponentialMovingAverage(period=7)
         self.ema_long = ExponentialMovingAverage(period=ema_long_period)
-        self.ema = ExponentialMovingAverage(period=12)
-        self.rsi = RelativeStrengthIndex(period=16)
-        self.atr = AverageTrueRange(period=12)
-        self.macd = MovingAverageConvergenceDivergence(long_period=30, short_period=12)
+        self.ema = ExponentialMovingAverage(period=7)
+        self.rsi = RelativeStrengthIndex(period=12)
+        self.atr = AverageTrueRange(period=7)
+        self.macd = MovingAverageConvergenceDivergence(long_period=20, short_period=9)
         self.stochastic_long = StochasticOscillator(period=9)
         self.stochastic_short = StochasticOscillator(period=3)
 
@@ -69,7 +69,7 @@ class MultiIndicatorStrategy(strategy.Strategy):
                 return
 
         if self.position_status == position.Position.short:
-            if self.stochastic_long.stoch_osc[0] > 0.7 or self.macd.macd[0] > self.ema_middle.ema_line[
+            if self.stochastic_long.stoch_osc[0] > 0.6 or self.macd.macd[0] > self.ema_middle.ema_line[
                 0] or self.current_profit() > 1 * self.atr.atr[0] or self.rsi.rsi[0] > 70:
                 self.close_position("SELL_SHORT")
                 return
@@ -84,7 +84,7 @@ class MultiIndicatorStrategy(strategy.Strategy):
     def is_flat_market(self):
         """Определяет, является ли рынок флэтовым."""
         macd_threshold = 1
-        return all(abs(self.macd.macd[-i]) < macd_threshold for i in range(1))
+        return all(abs(self.macd.macd[-i]) < macd_threshold for i in range(5))
 
     def buy_long(self, position_size):
         """Открыть лонг позицию."""

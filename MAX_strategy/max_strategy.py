@@ -63,14 +63,14 @@ class MultiIndicatorStrategy(strategy.Strategy):
 
         # Условия для выхода из позиции
         if self.position_status == position.Position.long:
-            if self.stochastic_long.stoch_osc[0] > 0.6 or self.macd.macd[0] < self.ema.ema_line[
-                0] or self.current_profit() > 1 * self.atr.atr[0] or self.rsi.rsi[0] > 70:
+            if self.stochastic_long.stoch_osc[0] > 0.6 or (self.macd.macd[-1] > self.ema.ema_line[-1] and self.macd.macd[0] < self.ema.ema_line[
+                0]) or self.current_profit() > 1 * self.atr.atr[0] or self.rsi.rsi[0] > 70:
                 self.close_position("SELL_LONG")
                 return
 
         if self.position_status == position.Position.short:
-            if self.stochastic_long.stoch_osc[0] > 0.6 or self.macd.macd[0] > self.ema_middle.ema_line[
-                0] or self.current_profit() > 1 * self.atr.atr[0] or self.rsi.rsi[0] > 70:
+            if self.stochastic_long.stoch_osc[0] > 0.6 or ( self.macd.macd[-1] < self.ema_middle.ema_line[-1] and self.macd.macd[0] > self.ema_middle.ema_line[
+                0]) or self.current_profit() > 1 * self.atr.atr[0] or self.current_profit() < -2 * self.atr.atr[0] or self.rsi.rsi[0] > 70:
                 self.close_position("SELL_SHORT")
                 return
 
